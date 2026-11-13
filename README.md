@@ -1,4 +1,5 @@
-Welcome to GeoPelago!
+**Welcome to GeoPelago! (H1)**
+
 In order to run the randomizer you will need follow the instructions below.
   
   1. Download the .apworld file and either double click the file or drag and drop it onto your open Archipelago Launcher.
