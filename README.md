@@ -1,4 +1,4 @@
-**Welcome to GeoPelago!(H1)**
+## **Welcome to GeoPelago!**
 
 In order to run the randomizer you will need follow the instructions below.
   
