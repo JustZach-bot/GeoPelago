@@ -1,0 +1,43 @@
+# GeoPelago player options
+# Fill this in, then give it to whoever generates the multiworld.
+
+name: Player{Number}          # Your slot name.
+game: GeoPelago
+description: Default GeoPelago player options
+
+# This is currently internal. Please disregard.
+requires:
+  version: 0.5.0
+
+GeoPelago:
+  # ----- Standard Archipelago options -----
+
+  progression_balancing: 50   # 0-99. Higher moves progression items to earlier spheres.
+  accessibility: full         # full: every location reachable. minimal: only the goal must be reachable.
+
+  # ----- Countries -----
+  # Each country is an item. You can only guess in a country once its item has been found.
+
+  starting_countries: 3       # 1-10. Countries unlocked from the start.
+
+  starting_country_list: []   # Choose your starting countries instead of random ones.
+  # starting_country_list:
+  #   - Japan
+  #   - Brazil
+
+  # ----- Checks -----
+  # The site always has 100 score checks (25 each for 0-1999, 2000-2999, 3000-3999, 4000-5000)
+  # and 50 "Correct Country" checks.
+
+  score_checks:
+    0-1999: 25                # 0-25 checks in each bracket that are active in this run.
+    2000-2999: 25
+    3000-3999: 25
+    4000-5000: 25
+
+  country_checks: 50          # 0-50 "Correct Country" checks active in this run.
+
+  # ----- Goal -----
+  # The goal is fixed: unlock every country in the pool. The website reports the goal as
+  # complete once every country item (minus any in excluded_countries) has been received.
+
