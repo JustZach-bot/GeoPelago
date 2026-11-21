@@ -39,3 +39,14 @@ FILLER_ITEM = "Map Pin"
 # so plain numbering from 1 is enough. Item IDs and location IDs are separate namespaces.
 ITEM_NAME_TO_ID = {name: i + 1 for i, name in enumerate(COUNTRY_NAMES)}
 ITEM_NAME_TO_ID[FILLER_ITEM] = len(COUNTRY_NAMES) + 1
+
+# Unlock items. Each one opens a whole group of checks. The 0-1999 bracket is open from the start.
+# Keys are the check groups: the three higher score brackets and "country" (the Correct Country checks).
+GATE_ITEMS = {
+    "2000-2999": "2000-2999 Unlock",
+    "3000-3999": "3000-3999 Unlock",
+    "4000-5000": "4000-5000 Unlock",
+    "country": "Correct Country Unlock",
+}
+for _i, _name in enumerate(GATE_ITEMS.values()):
+    ITEM_NAME_TO_ID[_name] = len(COUNTRY_NAMES) + 2 + _i

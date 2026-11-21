@@ -21,12 +21,6 @@ class StartingCountryList(OptionSet):
     valid_keys = frozenset(COUNTRY_NAMES)
 
 
-class ExcludedCountries(OptionSet):
-    """Countries that never appear in the item pool."""
-    display_name = "Excluded Countries"
-    valid_keys = frozenset(COUNTRY_NAMES)
-
-
 class CountriesRequired(Range):
     """How many countries you need to unlock to finish the game.
     Starting countries count toward this number."""
@@ -39,7 +33,8 @@ class CountriesRequired(Range):
 class ScoreChecks(OptionDict):
     """How many score checks are active in each bracket (0-999 each).
     Brackets: 0-1999, 2000-2999, 3000-3999, 4000-5000.
-    Across all brackets plus country_checks there must be at least 250 checks."""
+    Across all brackets plus country_checks there must be at least 250 checks.
+    The 0-1999 bracket is open from the start, so it needs at least 5 checks."""
     display_name = "Score Checks"
     valid_keys = frozenset(BRACKETS)
     default = {bracket: DEFAULT_CHECKS for bracket in BRACKETS}
@@ -57,7 +52,6 @@ class CountryChecks(Range):
 class GeoPelagoOptions(PerGameCommonOptions):
     starting_countries: StartingCountries
     starting_country_list: StartingCountryList
-    excluded_countries: ExcludedCountries
     countries_required: CountriesRequired
     score_checks: ScoreChecks
     country_checks: CountryChecks

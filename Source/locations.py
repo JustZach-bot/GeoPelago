@@ -4,6 +4,7 @@ BRACKETS = ("0-1999", "2000-2999", "3000-3999", "4000-5000")
 MAX_CHECKS = 999          # most checks allowed in any one bracket (and for Correct Country)
 MIN_TOTAL_CHECKS = 250    # fewest checks allowed across everything
 DEFAULT_CHECKS = 50       # 5 groups x 50 = 250
+MIN_STARTER_CHECKS = 5    # 0-1999 checks are the only ones open at the start, so some must exist
 
 
 def points_name(bracket: str, n: int) -> str:
