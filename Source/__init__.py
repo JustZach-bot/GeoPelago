@@ -52,7 +52,8 @@ class GeoPelagoWorld(World):
     pool: List[str]
     starting: List[str]
     counts: Dict[str, int]   # active checks per group: each bracket, plus "country"
-    gates: List[str]         # unlock items that are in this game
+    gates: List[str]         # unlock items that are in this game (empty when lock_checks is off)
+    lock: bool               # False = solo mode: every check is open from the start
     required: int
 
     def _fail(self, msg: str) -> None:
@@ -94,12 +95,13 @@ class GeoPelagoWorld(World):
         total = sum(self.counts.values())
         if total < MIN_TOTAL_CHECKS:
             self._fail(f"you have {total} checks in total but at least {MIN_TOTAL_CHECKS} are required.")
-        if self.counts["0-1999"] < MIN_STARTER_CHECKS:
-            self._fail(f"the 0-1999 bracket is the only one open at the start, so it needs at least "
+        self.lock = bool(opts.lock_checks.value)
+        if self.lock and self.counts["0-999"] < MIN_STARTER_CHECKS:
+            self._fail(f"the 0-999 bracket is the only one open at the start, so it needs at least "
                        f"{MIN_STARTER_CHECKS} checks.")
 
         # Only groups that actually have checks get an unlock item.
-        self.gates = [item for key, item in GATE_ITEMS.items() if self.counts[key] > 0]
+        self.gates = [item for key, item in GATE_ITEMS.items() if self.lock and self.counts[key] > 0]
 
         to_place = len(self.pool) - len(self.starting) + len(self.gates)
         if total < to_place:
@@ -118,8 +120,8 @@ class GeoPelagoWorld(World):
 
     def create_regions(self) -> None:
         # Logic for the checks:
-        #   - 0-1999 checks are in the Menu region, open from the start.
-        #   - Each other group (2000-2999, 3000-3999, 4000-5000, Correct Country) is its own region that can only be
+        #   - 0-999 checks are in the Menu region, open from the start.
+        #   - Each other group (1000-1999, 2000-2999, 3000-3999, 4000-5000, Correct Country) is its own region that can only be
         #     entered once its unlock item has been found.
         menu = Region("Menu", self.player, self.multiworld)
         self.multiworld.regions.append(menu)
@@ -127,7 +129,7 @@ class GeoPelagoWorld(World):
             amount = self.counts[key]
             if amount <= 0:
                 continue
-            gate = GATE_ITEMS.get(key)
+            gate = GATE_ITEMS.get(key) if self.lock else None   # lock_checks off: everything is open
             if gate is None:
                 region = menu
             else:
@@ -161,5 +163,5 @@ class GeoPelagoWorld(World):
         return {"countries": list(self.pool),
                 "countries_required": self.required,
                 "starting_countries": list(self.starting),
-                "gated_categories": [key for key in GATE_ITEMS if self.counts[key] > 0],
+                "gated_categories": [key for key in GATE_ITEMS if self.lock and self.counts[key] > 0],
                 "version": VERSION}

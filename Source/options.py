@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from Options import OptionDict, OptionSet, PerGameCommonOptions, Range
+from Options import DefaultOnToggle, OptionDict, OptionSet, PerGameCommonOptions, Range
 
 from .items import COUNTRY_NAMES
 from .locations import BRACKETS, DEFAULT_CHECKS, MAX_CHECKS
@@ -32,12 +32,18 @@ class CountriesRequired(Range):
 
 class ScoreChecks(OptionDict):
     """How many score checks are active in each bracket (0-999 each).
-    Brackets: 0-1999, 2000-2999, 3000-3999, 4000-5000.
+    Brackets: 0-999, 1000-1999, 2000-2999, 3000-3999, 4000-5000.
     Across all brackets plus country_checks there must be at least 250 checks.
-    The 0-1999 bracket is open from the start, so it needs at least 5 checks."""
+    The 0-999 bracket is open from the start, so it needs at least 5 checks."""
     display_name = "Score Checks"
     valid_keys = frozenset(BRACKETS)
     default = {bracket: DEFAULT_CHECKS for bracket in BRACKETS}
+
+
+class LockChecks(DefaultOnToggle):
+    """Lock the 1000-1999, 2000-2999, 3000-3999, 4000-5000 and Correct Country checks behind unlock items.
+    Turn this off for solo games to have every check open from the start (no unlock items are created)."""
+    display_name = "Lock Checks"
 
 
 class CountryChecks(Range):
@@ -55,3 +61,4 @@ class GeoPelagoOptions(PerGameCommonOptions):
     countries_required: CountriesRequired
     score_checks: ScoreChecks
     country_checks: CountryChecks
+    lock_checks: LockChecks

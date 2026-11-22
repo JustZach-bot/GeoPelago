@@ -40,9 +40,10 @@ FILLER_ITEM = "Map Pin"
 ITEM_NAME_TO_ID = {name: i + 1 for i, name in enumerate(COUNTRY_NAMES)}
 ITEM_NAME_TO_ID[FILLER_ITEM] = len(COUNTRY_NAMES) + 1
 
-# Unlock items. Each one opens a whole group of checks. The 0-1999 bracket is open from the start.
-# Keys are the check groups: the three higher score brackets and "country" (the Correct Country checks).
+# Unlock items. Each one opens a whole group of checks. Only the 0-999 bracket is open from the start.
+# Keys are the check groups: the four higher score brackets and "country" (the Correct Country checks).
 GATE_ITEMS = {
+    "1000-1999": "1000-1999 Unlock",
     "2000-2999": "2000-2999 Unlock",
     "3000-3999": "3000-3999 Unlock",
     "4000-5000": "4000-5000 Unlock",
