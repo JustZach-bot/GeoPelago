@@ -31,20 +31,25 @@ GeoPelago:
                               # Starting countries count, so this must be higher than your starting countries.
 
   # ----- Checks -----
-  # Each value can be 0-999. You need at least 250 checks in total across all five lines.
-  # The default is an even split: 50 + 50 + 50 + 50 + 50 = 250.
+  # Each value can be 0-999. You need at least 250 checks in total across all six lines.
+  # The default is an even split: 42 x 6 = 252, the closest even split to the 250 minimum.
   #
-  # Logic: the 0-1999 checks are open from the start (so you need at least 5 of them). The 2000-2999, 3000-3999
-  # and 4000-5000 checks each need their own unlock item, and the Correct Country checks need the
-  # "Correct Country Unlock" item. A group set to 0 has no checks and no unlock item.
+  # Logic: the 0-999 checks are open from the start (you need at least 5 of them).
+  # The 1000-1999, 2000-2999, 3000-3999 and 4000-5000 checks each need their own unlock item, and the Correct Country
+  # checks need the "Correct Country Unlock" item. A group set to 0 has no checks and no unlock item.
 
   score_checks:
-    0-1999: 50
-    2000-2999: 50
-    3000-3999: 50
-    4000-5000: 50
+    0-999: 42
+    1000-1999: 42
+    2000-2999: 42
+    3000-3999: 42
+    4000-5000: 42
 
-  country_checks: 50          # "Correct Country" checks
+  country_checks: 42          # "Correct Country" checks
+
+  lock_checks: true           # true: the locked groups above need their unlock items.
+                              # false: every check is open from the start and no unlock items are made.
+                              # Handy for solo games.
 
   # ----- Common Archipelago options -----
 
